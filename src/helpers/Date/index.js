@@ -14,3 +14,20 @@ export const MONTHS = {
 };
 
 export const getMonth = (date) => MONTHS[date.getMonth()];
+
+/**
+ * Sort the list inplace based on the `date` field in asc order
+ * @param {Array} list List of items with a `date` string field
+ */
+export const sortListByDate = (list) =>
+  list.sort((a, b) => {
+    const aTimestamp = new Date(a.date).getTime();
+    const bTimestamp = new Date(b.date).getTime();
+    if (aTimestamp > bTimestamp) {
+      return 1;
+    }
+    if (aTimestamp < bTimestamp) {
+      return -1;
+    }
+    return 0;
+  });

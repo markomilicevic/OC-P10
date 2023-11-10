@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { sortListByDate } from "../../helpers/Date";
 
 const DataContext = createContext({});
 
@@ -21,7 +22,13 @@ export const DataProvider = ({ children }) => {
   const [data, setData] = useState(null);
   const getData = useCallback(async () => {
     try {
-      setData(await api.loadData());
+      const response = await api.loadData();
+
+      if (response.focus) {
+        sortListByDate(response.focus);
+      }
+
+      setData(response);
     } catch (err) {
       setError(err);
     }
