@@ -53,6 +53,33 @@ describe("When a data context is created", () => {
     expect(titles[2].textContent).toBe("Nordic design week");
   });
 
+  it("the events elements are sorted", async () => {
+    api.loadData = jest.fn().mockReturnValue(mockedData);
+    const Component = () => {
+      const { data } = useData();
+      return (
+        <div>
+          {data?.events?.map((item) => (
+            <p key={item.title} data-testid="title">
+              {item.title}
+            </p>
+          ))}
+        </div>
+      );
+    };
+
+    render(
+      <DataProvider>
+        <Component />
+      </DataProvider>
+    );
+
+    const titles = await screen.findAllByTestId("title");
+    expect(titles[0].textContent).toBe("Conférence &co-responsable");
+    expect(titles[1].textContent).toBe("User&product MixUsers");
+    expect(titles[2].textContent).toBe("#DigitonPARIS");
+  });
+
   describe("and the events call failed", () => {
     it("the error is dispatched", async () => {
       window.console.error = jest.fn();

@@ -12,8 +12,8 @@ const DataContext = createContext({});
 
 export const api = {
   loadData: async () => {
-    const json = await fetch("/events.json");
-    return json.json();
+    const response = await fetch("/events.json");
+    return response.json();
   },
 };
 
@@ -26,6 +26,10 @@ export const DataProvider = ({ children }) => {
 
       if (response.focus) {
         sortListByDate(response.focus);
+      }
+
+      if (response.events) {
+        sortListByDate(response.events);
       }
 
       setData(response);
