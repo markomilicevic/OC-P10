@@ -63,7 +63,8 @@ describe("When a select is created", () => {
             cancelable: true,
           })
         );
-        expect(onChange.mock.calls.length).toBeGreaterThan(0);
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0]).toBe("value1");
 
         fireEvent(
           collapseButtonElement,
@@ -81,7 +82,58 @@ describe("When a select is created", () => {
             cancelable: true,
           })
         );
-        expect(onChange.mock.calls.length).toBeGreaterThan(1);
+        expect(onChange.mock.calls.length).toBe(2);
+        expect(onChange.mock.calls[1][0]).toBe(null);
+      });
+
+      it("switch between expand and collapse", async () => {
+        render(<Select selection={["value1", "value2"]} />);
+        expect(await screen.queryAllByTestId("select-choice").length).toBe(0);
+
+        const collapseButtonElement = screen.getByTestId(
+          "collapse-button-testid"
+        );
+        fireEvent(
+          collapseButtonElement,
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+        expect(
+          await screen.queryAllByTestId("select-choice").length
+        ).toBeGreaterThan(0);
+
+        const choice1 = screen.getByText("value1");
+        fireEvent(
+          choice1,
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+        expect(await screen.queryAllByTestId("select-choice").length).toBe(0);
+
+        fireEvent(
+          collapseButtonElement,
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+        expect(
+          await screen.queryAllByTestId("select-choice").length
+        ).toBeGreaterThan(0);
+
+        const choiceAll = screen.getByText("Toutes");
+        fireEvent(
+          choiceAll,
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
+        expect(await screen.queryAllByTestId("select-choice").length).toBe(0);
       });
     });
   });
