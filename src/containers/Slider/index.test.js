@@ -1,44 +1,33 @@
 import { render, screen } from "@testing-library/react";
 import Slider from "./index";
 import { api, DataProvider } from "../../contexts/DataContext";
-
-const data = {
-  focus: [
-    {
-      title: "World economic forum",
-      description:
-        "Oeuvre à la coopération entre le secteur public et le privé.",
-      date: "2022-02-29T20:28:45.744Z",
-      cover: "/images/evangeline-shaw-nwLTVwb7DbU-unsplash1.png",
-    },
-    {
-      title: "World Gaming Day",
-      description: "Evenement mondial autour du gaming",
-      date: "2022-03-29T20:28:45.744Z",
-      cover: "/images/evangeline-shaw-nwLTVwb7DbU-unsplash1.png",
-    },
-    {
-      title: "World Farming Day",
-      description: "Evenement mondial autour de la ferme",
-      date: "2022-01-29T20:28:45.744Z",
-      cover: "/images/evangeline-shaw-nwLTVwb7DbU-unsplash1.png",
-    },
-  ],
-};
+import mockedData from "../../contexts/DataContext/mocks/data.json";
 
 describe("When slider is created", () => {
-  it("a list card is displayed", async () => {
+  beforeEach(() => {
     window.console.error = jest.fn();
-    api.loadData = jest.fn().mockReturnValue(data);
+    api.loadData = jest.fn().mockReturnValue(mockedData);
+
     render(
       <DataProvider>
         <Slider />
       </DataProvider>
     );
-    await screen.findByText("World economic forum");
-    await screen.findByText("janvier");
-    await screen.findByText(
-      "Oeuvre à la coopération entre le secteur public et le privé."
+  });
+
+  it("a list card is displayed", async () => {
+    const cards = await screen.findAllByTestId("slide-card");
+    expect(cards[0].querySelector("h3").textContent).toBe(
+      "Sneakercraze market"
     );
+    expect(cards[1].querySelector("h3").textContent).toBe(
+      "World economic forum"
+    );
+    expect(cards[2].querySelector("h3").textContent).toBe("Nordic design week");
+  });
+
+  it("a pagination is displayed", async () => {
+    const paginations = await screen.findAllByTestId("slide-pagination");
+    expect(paginations.length).toBe(3);
   });
 });

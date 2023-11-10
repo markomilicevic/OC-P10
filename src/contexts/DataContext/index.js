@@ -6,13 +6,14 @@ import {
   useEffect,
   useState,
 } from "react";
+import { sortListByDate } from "../../helpers/Date";
 
 const DataContext = createContext({});
 
 export const api = {
   loadData: async () => {
-    const json = await fetch("/events.json");
-    return json.json();
+    const response = await fetch("/events.json");
+    return response.json();
   },
 };
 
@@ -21,7 +22,17 @@ export const DataProvider = ({ children }) => {
   const [data, setData] = useState(null);
   const getData = useCallback(async () => {
     try {
-      setData(await api.loadData());
+      const response = await api.loadData();
+
+      if (response.focus) {
+        sortListByDate(response.focus);
+      }
+
+      if (response.events) {
+        sortListByDate(response.events);
+      }
+
+      setData(response);
     } catch (err) {
       setError(err);
     }

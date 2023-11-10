@@ -9,7 +9,7 @@ const Modal = ({ opened, Content, children }) => {
     <>
       {children({ isOpened, setIsOpened })}
       {isOpened && (
-        <div className="modal">
+        <div className="modal" data-testid="modal">
           <div className="content">
             {Content}
             <button
