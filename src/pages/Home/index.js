@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import EventCard from "../../components/EventCard";
 import PeopleCard from "../../components/PeopleCard";
+import ModalEvent from "../../containers/ModalEvent";
 
 import "./style.scss";
 import EventList from "../../containers/EventList";
@@ -13,7 +15,15 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const { last } = useData();
+  const [lastEvent, setLastEvent] = useState(null);
+  const { data } = useData();
+
+  useEffect(() => {
+    if (data?.events?.length > 0) {
+      setLastEvent(data.events[data.events.length - 1]);
+    }
+  }, [data]);
+
   return (
     <>
       <header>
@@ -111,16 +121,27 @@ const Page = () => {
           </Modal>
         </div>
       </main>
-      <footer className="row">
+      <footer className="row" data-testid="footer">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
-          <EventCard
-            imageSrc={last?.cover}
-            title={last?.title}
-            date={new Date(last?.date)}
-            small
-            label="boom"
-          />
+          {lastEvent && (
+            <Modal
+              key={lastEvent.id}
+              Content={<ModalEvent event={lastEvent} />}
+            >
+              {({ setIsOpened }) => (
+                <EventCard
+                  data-testid="last-event"
+                  onClick={() => setIsOpened(true)}
+                  imageSrc={lastEvent.cover}
+                  title={lastEvent.title}
+                  date={new Date(lastEvent.date)}
+                  small
+                  label="boom"
+                />
+              )}
+            </Modal>
+          )}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>
