@@ -27,6 +27,14 @@ describe("Date helper", () => {
   });
 
   describe("When sortListByDate is called", () => {
+    it("The function don't touch to an empty array", () => {
+      const list = [];
+
+      sortListByDate(list);
+
+      expect(list.length).toBe(0);
+    });
+
     it("the function sort the list inplace by the date field in asc order", () => {
       const list = [
         {
