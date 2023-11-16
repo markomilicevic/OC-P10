@@ -1,4 +1,4 @@
-import { getMonth, sortListByDate } from "./index";
+import { getMonth, sortFromMostRecentToOldest } from "./index";
 
 describe("Date helper", () => {
   describe("When getMonth is called", () => {
@@ -26,36 +26,36 @@ describe("Date helper", () => {
     });
   });
 
-  describe("When sortListByDate is called", () => {
+  describe("When sortFromMostRecentToOldest is called", () => {
     it("The function don't touch to an empty array", () => {
       const list = [];
 
-      sortListByDate(list);
+      sortFromMostRecentToOldest(list);
 
       expect(list.length).toBe(0);
     });
 
-    it("the function sort the list inplace by the date field in asc order", () => {
+    it("the function sort the list inplace by the date field in desc order", () => {
       const list = [
         {
           id: "c",
-          date: "2000-01-01T00:00:00.000Z",
-        },
-        {
-          id: "a",
           date: "1990-01-01T00:00:00.000Z",
         },
         {
           id: "b",
-          date: "1990-01-01T00:00:00.000Z",
+          date: "2000-01-01T00:00:00.000Z",
         },
         {
           id: "d",
+          date: "1990-01-01T00:00:00.000Z",
+        },
+        {
+          id: "a",
           date: "2010-01-01T00:00:00.000Z",
         },
       ];
 
-      sortListByDate(list);
+      sortFromMostRecentToOldest(list);
 
       expect(list.length).toBe(4);
       expect(list[0].id).toBe("a");
