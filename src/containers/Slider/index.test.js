@@ -17,13 +17,13 @@ describe("When slider is created", () => {
 
   it("a list card is displayed", async () => {
     const cards = await screen.findAllByTestId("slide-card");
-    expect(cards[0].querySelector("h3").textContent).toBe(
-      "Sneakercraze market"
-    );
+    expect(cards[0].querySelector("h3").textContent).toBe("Nordic design week");
     expect(cards[1].querySelector("h3").textContent).toBe(
       "World economic forum"
     );
-    expect(cards[2].querySelector("h3").textContent).toBe("Nordic design week");
+    expect(cards[2].querySelector("h3").textContent).toBe(
+      "Sneakercraze market"
+    );
   });
 
   it("a pagination is displayed", async () => {

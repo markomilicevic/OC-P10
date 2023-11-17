@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { sortListByDate } from "../../helpers/Date";
+import { sortFromMostRecentToOldest } from "../../helpers/Date";
 
 const DataContext = createContext({});
 
@@ -25,11 +25,11 @@ export const DataProvider = ({ children }) => {
       const response = await api.loadData();
 
       if (response.focus) {
-        sortListByDate(response.focus);
+        sortFromMostRecentToOldest(response.focus);
       }
 
       if (response.events) {
-        sortListByDate(response.events);
+        sortFromMostRecentToOldest(response.events);
       }
 
       setData(response);

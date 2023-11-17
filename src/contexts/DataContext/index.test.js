@@ -48,9 +48,9 @@ describe("When a data context is created", () => {
     );
 
     const titles = await screen.findAllByTestId("title");
-    expect(titles[0].textContent).toBe("Sneakercraze market");
+    expect(titles[0].textContent).toBe("Nordic design week");
     expect(titles[1].textContent).toBe("World economic forum");
-    expect(titles[2].textContent).toBe("Nordic design week");
+    expect(titles[2].textContent).toBe("Sneakercraze market");
   });
 
   it("the events elements are sorted", async () => {
@@ -75,9 +75,9 @@ describe("When a data context is created", () => {
     );
 
     const titles = await screen.findAllByTestId("title");
-    expect(titles[0].textContent).toBe("Conférence &co-responsable");
+    expect(titles[0].textContent).toBe("#DigitonPARIS");
     expect(titles[1].textContent).toBe("User&product MixUsers");
-    expect(titles[2].textContent).toBe("#DigitonPARIS");
+    expect(titles[2].textContent).toBe("Conférence &co-responsable");
   });
 
   describe("and the events call failed", () => {

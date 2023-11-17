@@ -20,7 +20,7 @@ const Page = () => {
 
   useEffect(() => {
     if (data?.events?.length > 0) {
-      setLastEvent(data.events[data.events.length - 1]);
+      setLastEvent(data.events[0]);
     }
   }, [data]);
 
